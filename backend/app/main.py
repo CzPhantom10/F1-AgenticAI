@@ -1,4 +1,4 @@
-"""FastAPI application entrypoint for PitWall AI."""
+"""FastAPI application entrypoint for Racecraft AI."""
 
 from __future__ import annotations
 

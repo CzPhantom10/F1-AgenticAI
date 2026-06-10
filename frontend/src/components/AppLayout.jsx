@@ -25,7 +25,7 @@ export function AppLayout() {
         <div className="glass-panel flex flex-col gap-4 rounded-[1.75rem] px-5 py-4 shadow-glow sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-display text-xs uppercase tracking-[0.45em] text-red-300/90">
-              PitWall AI
+              Racecraft AI
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-3">
               <h1 className="text-3xl font-bold text-white sm:text-4xl">Formula 1 Command Center</h1>

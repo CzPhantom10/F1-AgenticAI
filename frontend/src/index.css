@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+  background:
+    radial-gradient(circle at top, rgba(220, 38, 38, 0.28), transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.08), transparent 22%),
+    linear-gradient(180deg, #0a0b10 0%, #040507 100%);
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 82% 12%, rgba(220, 38, 38, 0.24), transparent 22%),
+    linear-gradient(180deg, #0b0c12 0%, #05060a 100%);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: 'Rajdhani', 'Space Grotesk', system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(239, 68, 68, 0.35);
+  color: white;
+}
+
+@layer components {
+  .glass-panel {
+    @apply relative overflow-hidden border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl shadow-black/30;
+  }
+
+  .glass-panel::before {
+    content: '';
+    @apply pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent;
+  }
+
+  .dashboard-grid {
+    @apply grid gap-4 lg:grid-cols-12;
+  }
+
+  .card-title {
+    @apply text-xs font-semibold uppercase tracking-[0.35em] text-white/55;
+  }
+
+  .card-heading {
+    @apply mt-2 text-2xl font-bold text-white sm:text-3xl;
+  }
+
+  .f1-chip {
+    @apply inline-flex items-center rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-red-100;
+  }
+
+  .nav-link {
+    @apply rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/70 transition hover:border-red-400/40 hover:bg-red-500/10 hover:text-white;
+  }
+
+  .nav-link-active {
+    @apply border-red-400/50 bg-red-500/15 text-white shadow-lg shadow-red-500/10;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

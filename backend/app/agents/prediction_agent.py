@@ -148,6 +148,10 @@ class PredictionAgent:
                 .limit(5)
             ).all()
 
+            wins = 0
+            podiums = 0
+            points = 0.0
+            avg_f = 10.0
             recent_form_score = 50.0
             if recent_results:
                 wins = sum(1 for r in recent_results if r.finish_position == 1)
@@ -187,6 +191,10 @@ class PredictionAgent:
                     select(CircuitInsight).where(CircuitInsight.circuit_id == race.circuit_id)
                 )
 
+            w = 0
+            p = 0
+            af = None
+            apps = 0
             circuit_score = 40.0
             if circuit_insight:
                 best_drivers = json.loads(circuit_insight.best_drivers_json)
@@ -206,6 +214,7 @@ class PredictionAgent:
 
             # ── 3. CONSTRUCTOR FORM (20%) ──
             constructor_score = 50.0
+            constructor_season_points = 0.0
             if constructor:
                 constructor_season_points = session.scalar(
                     select(func.coalesce(func.sum(RaceResult.points), 0))
@@ -277,6 +286,18 @@ class PredictionAgent:
                 "driver_code": driver.driver_code,
                 "score": round(composite, 2),
                 "features": [recent_form_score, circuit_score, constructor_score, qualifying_score, standings_score],
+                "recent_wins": wins,
+                "recent_podiums": podiums,
+                "recent_points": points,
+                "recent_avg_finish": avg_f,
+                "circuit_wins": w,
+                "circuit_podiums": p,
+                "circuit_avg_finish": af,
+                "circuit_appearances": apps,
+                "constructor_name": constructor.name if constructor else "Unknown",
+                "constructor_points": constructor_season_points,
+                "qualifying_grid": grid,
+                "standings_points": standings_points,
             })
 
         driver_scores.sort(key=lambda x: -x["score"])
@@ -303,6 +324,7 @@ class PredictionAgent:
         # races available: recent races and circuit history
         recent_count = len(recent_results) if recent_results else 0
         
+        winner_stats = driver_scores[0]
         winner_driver_id = winner.driver_id
         winner_record = None
         if circuit_insight:
@@ -321,33 +343,90 @@ class PredictionAgent:
         confidence_val = round(50.0 + (completeness * 20.0) + (races_factor * 15.0) + (agreement * 10.0), 1)
         confidence_val = max(50.0, min(95.0, confidence_val))
 
-        # Format output exactly as requested
-        reasons = [
-            "• Winner predicted based on strong recent form in recent races, showing consistent finishes.",
-            f"• Excellent track record and familiarity with the {race.circuit.name} layout.",
-            "• Highly competitive constructor form contributing to race pace."
-        ]
+        # Format reasoning dynamically based on actual data
+        reasons = []
 
-        podium_lines = []
-        for idx, p in enumerate(podium):
-            podium_lines.append(f"{idx+1}. {p.driver_name}")
-        podium_text = "\n".join(podium_lines)
+        # 1. Recent Form (40%)
+        if winner_stats["recent_points"] > 0 or winner_stats["recent_wins"] > 0:
+            reasons.append(
+                f"Winner predicted based on strong recent form: {winner_stats['driver_name']} won {winner_stats['recent_wins']} of the last 5 races "
+                f"and scored {winner_stats['recent_points']:.1f} championship points, showing superior recent form."
+            )
 
-        confidence_category = "High" if confidence_val >= 80.0 else ("Medium" if confidence_val >= 60.0 else "Low")
+        # 2. Circuit performance history (20%)
+        if winner_stats["circuit_appearances"] > 0:
+            avg_fin = f"{winner_stats['circuit_avg_finish']:.1f}" if winner_stats['circuit_avg_finish'] is not None else "N/A"
+            reasons.append(
+                f"At {race.circuit.name}, {winner_stats['driver_name']} has {winner_stats['circuit_podiums']} podiums "
+                f"from {winner_stats['circuit_appearances']} appearances and an average finish of {avg_fin}."
+            )
 
+        # 3. Constructor strength (20%)
+        if winner_stats["constructor_points"] > 0 and winner_stats["constructor_name"] != "Unknown":
+            reasons.append(
+                f"{winner_stats['constructor_name']} has contributed strong constructor form, scoring "
+                f"{winner_stats['constructor_points']:.1f} points this season."
+            )
+
+        # 4. Qualifying (10%)
+        if winner_stats["qualifying_grid"] <= 5:
+            reasons.append(
+                f"Shows strong starting position with grid position or qualifying average of P{winner_stats['qualifying_grid']:.1f}."
+            )
+
+        # 5. Championship Standings (10%)
+        if winner_stats["standings_points"] > 0:
+            reasons.append(
+                f"Holds {winner_stats['standings_points']:.1f} standing points, maintaining high championship status."
+            )
+
+        reasons_bullet = "\n".join(f"- {r}" for r in reasons)
+
+        key_numbers = []
+        if winner_stats["recent_wins"] > 0 or winner_stats["recent_podiums"] > 0:
+            key_numbers.append(f"- {winner_stats['recent_wins']} wins in the last 5 races")
+            key_numbers.append(f"- {winner_stats['recent_podiums']} podiums in the last 5 races")
+        if winner_stats["standings_points"] > 0:
+            key_numbers.append(f"- {winner_stats['standings_points']:.1f} championship points this season")
+        if winner_stats["recent_avg_finish"] < 20.0:
+            key_numbers.append(f"- average finish of {winner_stats['recent_avg_finish']:.1f} in recent rounds")
+
+        key_numbers_bullet = "\n".join(key_numbers)
+
+        closest_challenger_text = ""
+        if len(driver_scores) >= 2:
+            runner_up = driver_scores[1]
+            winner_features = winner_stats["features"]
+            runner_up_features = runner_up["features"]
+            diffs = [w - r for w, r in zip(winner_features, runner_up_features)]
+            
+            feature_names = [
+                "superior recent form",
+                f"better track history at {race.circuit.name}",
+                "stronger team performance",
+                "better qualifying position",
+                "higher standings position"
+            ]
+            max_diff_idx = diffs.index(max(diffs))
+            reason_phrase = feature_names[max_diff_idx]
+            
+            closest_challenger_text = (
+                f"- {winner_stats['driver_name']}'s prediction score was {winner_stats['score']:.1f} "
+                f"versus {runner_up['driver_name']}'s {runner_up['score']:.1f}, mainly due to {reason_phrase}."
+            )
+
+        # Reasoning formatting matches the spec exactly
         reasoning_text = (
-            f"🏁 {race.race_name} Prediction\n\n"
-            "Predicted Podium\n\n"
-            f"{podium_text}\n\n"
-            f"Confidence: {confidence_category} ({confidence_val:.1f}%)\n\n"
-            "Factors Considered\n"
-            "• Circuit performance history\n"
-            "• Recent form\n"
-            "• Podiums at this circuit\n"
-            "• Average finishing position\n"
-            "• Constructor strength\n\n"
-            "Reasons:\n"
-            + "\n".join(reasons)
+            "Prediction:\n"
+            f"{winner.driver_name}\n\n"
+            "Confidence:\n"
+            f"{confidence_val:.1f}%\n\n"
+            "Why This Driver?\n"
+            f"{reasons_bullet}\n\n"
+            "Key Numbers\n"
+            f"{key_numbers_bullet}\n\n"
+            "Closest Challenger\n"
+            f"{closest_challenger_text}"
         )
 
         return PredictionResponse(

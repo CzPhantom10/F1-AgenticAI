@@ -1,1 +1,1 @@
-"""PitWall AI backend package."""
+"""Racecraft AI backend package."""

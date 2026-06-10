@@ -1012,7 +1012,7 @@ class AnalystAgent:
 
         client = self._get_groq_client()
         system_prompt = (
-            "You are PitWall AI, a Formula 1 data analyst.\n"
+            "You are Racecraft AI, a Formula 1 data analyst.\n"
             "RULES:\n"
             "1. ONLY use the provided data context. NEVER infer or hallucinate statistics.\n"
             "2. If the context is insufficient, explicitly state what data is required.\n"

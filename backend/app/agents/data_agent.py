@@ -1,4 +1,4 @@
-"""FastF1-backed data agent for PitWall AI."""
+"""FastF1-backed data agent for Racecraft AI."""
 
 from __future__ import annotations
 

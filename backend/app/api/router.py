@@ -1,8 +1,9 @@
-"""Top-level API router for PitWall AI."""
+"""Top-level API router for Racecraft AI."""
 
 from fastapi import APIRouter
 
 from app.api.routes.analyst import analyst_router
+from app.api.routes.orchestrator import orchestrator_router
 from app.api.routes.resources import (
 	constructors_router,
 	drivers_router,
@@ -26,5 +27,6 @@ api_router.include_router(standings_router)
 api_router.include_router(results_router)
 api_router.include_router(qualifying_router)
 api_router.include_router(analyst_router)
+api_router.include_router(orchestrator_router)
 api_router.include_router(memory_router)
 api_router.include_router(prediction_router)
