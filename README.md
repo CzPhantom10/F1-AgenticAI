@@ -29,7 +29,7 @@ What makes Racecraft AI different is its **Agentic Orchestrator Architecture**. 
 
 ---
 
-## 🤖 Agent Architecture
+## Agent Architecture
 
 Racecraft AI orchestrates four specialized sub-agents to serve user requests:
 
@@ -80,7 +80,7 @@ flowchart TD
 
 ---
 
-## 🗄 Database Schema & Relationships
+## Database Schema & Relationships
 
 The platform relies on the SQLite schema mapped below:
 
@@ -114,7 +114,7 @@ erDiagram
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```text
 racecraft-ai/
@@ -147,7 +147,7 @@ racecraft-ai/
 
 ---
 
-## 💻 Frontend Views
+## Frontend Views
 
 - **Dashboard ([DashboardPage.jsx](file:///c:/Users/Prateek/Documents/Projects/F1-intelligent-agent/frontend/src/pages/DashboardPage.jsx))**: Command center header, KPI tiles, side-by-side Completed/Upcoming race widgets, standings previews (driver & constructor tables), and ML prediction factor tables.
 - **Drivers ([DriversPage.jsx](file:///c:/Users/Prateek/Documents/Projects/F1-intelligent-agent/frontend/src/pages/DriversPage.jsx)) & Detail ([DriverDetailPage.jsx](file:///c:/Users/Prateek/Documents/Projects/F1-intelligent-agent/frontend/src/pages/DriverDetailPage.jsx))**: Multi-season standings lists, aggregate stats panels, and recent rounds finishing charts.
@@ -157,7 +157,7 @@ racecraft-ai/
 
 ---
 
-## ⚡ Setup & Installation
+## Setup & Installation
 
 ### Backend Setup
 1. **Navigate to the backend directory**:
@@ -205,7 +205,7 @@ racecraft-ai/
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 Verify backend functionality using the pytest suite:
 ```bash
 cd backend
@@ -214,7 +214,7 @@ pytest
 
 ---
 
-## 💬 Example Questions the AI Can Answer
+## Example Questions the AI Can Answer
 
 - **Circuit Dominance**: *"Who performs best at Monaco?"* or *"Which team dominantes Silverstone?"*
 - **Stats Comparison**: *"Compare Hamilton and Verstappen career stats"* or *"Compare Leclerc and Norris career stats"*
@@ -227,7 +227,7 @@ pytest
 
 ---
 
-## 🚀 Future Roadmap
+## Future Roadmap
 - [ ] Interactive telemetry lap charts.
 - [ ] Real-time WebSocket feed integrations during Grand Prix weekends.
 - [ ] Live pit stop optimization recommendations and strategy simulators.
