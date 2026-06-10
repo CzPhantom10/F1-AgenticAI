@@ -1,4 +1,4 @@
-# 🏎️ PitWall AI – Formula 1 Intelligence Platform
+# PitWall AI – Formula 1 Intelligence Platform
 
 PitWall AI is an AI-powered Formula 1 analytics platform that combines historical race data, championship standings, constructor performance, circuit intelligence, and predictive insights into a single command center.
 
@@ -6,9 +6,9 @@ Users can explore Formula 1 seasons, analyze driver and constructor performance,
 
 ---
 
-## 🚀 Features
+## Features
 
-### 📊 Championship Dashboard
+### Championship Dashboard
 
 * Live Driver Standings
 * Live Constructor Standings
@@ -17,7 +17,7 @@ Users can explore Formula 1 seasons, analyze driver and constructor performance,
 * Next Race Information
 * Season Overview Metrics
 
-### 👨‍🏎️ Driver Analytics
+### Driver Analytics
 
 * Multi-season Driver Standings (2018–2026)
 * Career Performance Analysis
@@ -25,14 +25,14 @@ Users can explore Formula 1 seasons, analyze driver and constructor performance,
 * Driver Comparison Engine
 * Historical Driver Rankings
 
-### 🏁 Constructor Analytics
+### Constructor Analytics
 
 * Multi-season Constructor Standings
 * Team Performance Tracking
 * Constructor Comparisons
 * Historical Championship Data
 
-### 🌍 Circuit Intelligence
+### Circuit Intelligence
 
 Track-specific analytics including:
 
@@ -52,7 +52,7 @@ Metrics include:
 * Driver Rankings
 * Constructor Rankings
 
-### 🤖 AI Analyst (Groq Powered)
+### AI Analyst (Groq Powered)
 
 Users can ask natural language questions such as:
 
@@ -64,7 +64,7 @@ Users can ask natural language questions such as:
 
 The AI dynamically selects relevant datasets and generates contextual explanations.
 
-### 🔮 Race Prediction Engine
+### Race Prediction Engine
 
 Prediction model uses:
 
@@ -83,7 +83,7 @@ Outputs:
 
 ---
 
-## 🧠 AI Capabilities
+## AI Capabilities
 
 PitWall AI supports:
 
@@ -114,7 +114,7 @@ PitWall AI supports:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -147,7 +147,7 @@ PitWall AI supports:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 pitwall-ai/
@@ -176,7 +176,7 @@ pitwall-ai/
 
 ---
 
-## 📈 Data Sources
+## Data Sources
 
 ### FastF1
 
@@ -201,7 +201,7 @@ Coverage:
 
 ---
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Fans
 
@@ -223,7 +223,7 @@ Coverage:
 
 ---
 
-## 🔥 Example Questions
+## Example Questions
 
 ```text
 Who performs best at Silverstone?
@@ -268,6 +268,6 @@ to create a next-generation Formula 1 Intelligence Platform.
 
 ---
 
-### 🏆 PitWall AI
+### PitWall AI
 
 **Race Intelligence. Lap by Lap.**
