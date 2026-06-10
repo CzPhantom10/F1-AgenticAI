@@ -255,18 +255,6 @@ Who has the highest average finish at Monza?
 
 ---
 
-## Authors
-
-Developed as part of a hackathon project focused on combining:
-
-* Sports Analytics
-* Historical Data Intelligence
-* Large Language Models
-* Predictive Analytics
-
-to create a next-generation Formula 1 Intelligence Platform.
-
----
 
 ### PitWall AI
 
