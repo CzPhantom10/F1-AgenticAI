@@ -14,6 +14,14 @@ def create_app() -> FastAPI:
 
     settings = get_settings()
 
+    # Automatically initialize database tables on startup
+    from app.database.init_db import init_db
+    try:
+        init_db()
+    except Exception as e:
+        import sys
+        print(f"Database initialization failed: {e}", file=sys.stderr)
+
     app = FastAPI(
         title=settings.app_name,
         version=settings.app_version,
