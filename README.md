@@ -6,7 +6,7 @@ What makes Racecraft AI different is its **Agentic Orchestrator Architecture**. 
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - **Framework**: [React 19](https://react.dev/) (Vite-backed build environment)
