@@ -21,6 +21,7 @@ myenv/
 
 # Local databases and generated data
 *.db
+!backend/racecraft_ai.db
 *.sqlite
 *.sqlite3
 
