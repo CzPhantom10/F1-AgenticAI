@@ -9,11 +9,11 @@ import { getDriverDetail } from '../lib/f1Api'
 // ── Stat tile ──────────────────────────────────────────────────────────────
 function StatTile({ label, value, accent = false }) {
   return (
-    <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-      <p className="text-xs uppercase tracking-[0.35em] text-white/45">{label}</p>
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
+      <p className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">{label}</p>
       <p
         className={`mt-2 font-display text-3xl font-bold ${
-          accent ? 'text-red-200' : 'text-white'
+          accent ? 'text-red-400' : 'text-white'
         }`}
       >
         {value}
@@ -24,14 +24,14 @@ function StatTile({ label, value, accent = false }) {
 
 // ── Position badge ─────────────────────────────────────────────────────────
 function PosBadge({ pos }) {
-  if (pos == null) return <span className="text-white/30">—</span>
+  if (pos == null) return <span className="text-zinc-650">—</span>
 
   const color =
     pos === 1
-      ? 'text-yellow-300'
+      ? 'text-yellow-350'
       : pos <= 3
-        ? 'text-red-200'
-        : 'text-white/80'
+        ? 'text-red-400'
+        : 'text-zinc-300'
 
   return <span className={`font-display text-xl font-bold ${color}`}>P{pos}</span>
 }
@@ -41,10 +41,10 @@ function StatusPill({ status }) {
   const finished = status === 'Finished'
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+      className={`inline-flex items-center rounded border px-2 py-0.5 text-xs font-semibold ${
         finished
-          ? 'bg-emerald-500/15 text-emerald-300'
-          : 'bg-white/8 text-white/55'
+          ? 'bg-zinc-800 text-zinc-400 border-zinc-700'
+          : 'bg-red-600/10 text-red-400 border-red-600/20'
       }`}
     >
       {status}
@@ -56,17 +56,17 @@ function StatusPill({ status }) {
 function RecentResultsTable({ results }) {
   if (!results.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-white/15 bg-black/20 p-5 text-sm text-white/55">
+      <div className="rounded-xl border border-dashed border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-500">
         No race results found.
       </div>
     )
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-white/10">
+    <div className="overflow-x-auto rounded-xl border border-zinc-800">
       <div className="min-w-[640px]">
         {/* Header */}
-        <div className="grid grid-cols-[2fr_1.2fr_72px_72px_72px_100px_120px] gap-3 border-b border-white/10 bg-black/25 px-4 py-3 text-xs uppercase tracking-[0.28em] text-white/40">
+        <div className="grid grid-cols-[2fr_1.2fr_72px_72px_72px_100px_120px] gap-3 border-b border-zinc-800 bg-zinc-950/60 px-4 py-3 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
           <span>Race</span>
           <span>Team</span>
           <span>Grid</span>
@@ -77,25 +77,25 @@ function RecentResultsTable({ results }) {
         </div>
 
         {/* Rows */}
-        <div className="divide-y divide-white/5 bg-white/3">
+        <div className="divide-y divide-zinc-800/60 bg-zinc-900/40">
           {results.map((r) => (
             <div
               key={`${r.race_id}`}
-              className="grid grid-cols-[2fr_1.2fr_72px_72px_72px_100px_120px] gap-3 px-4 py-3 transition hover:bg-white/5"
+              className="grid grid-cols-[2fr_1.2fr_72px_72px_72px_100px_120px] gap-3 px-4 py-3 transition hover:bg-zinc-850"
             >
               {/* Race name + circuit */}
               <div>
                 <p className="text-sm font-semibold text-white">{r.race_name}</p>
-                <p className="text-xs text-white/45">
+                <p className="text-xs text-zinc-500">
                   {r.circuit_country} · R{r.round_number} · {r.season}
                 </p>
               </div>
 
               {/* Constructor */}
-              <p className="self-center text-sm text-white/70">{r.constructor_name}</p>
+              <p className="self-center text-sm text-zinc-400">{r.constructor_name}</p>
 
               {/* Grid */}
-              <p className="self-center text-sm text-white/60">
+              <p className="self-center text-sm text-zinc-500">
                 {r.grid_position != null ? `P${r.grid_position}` : '—'}
               </p>
 
@@ -105,7 +105,7 @@ function RecentResultsTable({ results }) {
               </div>
 
               {/* Points */}
-              <p className="self-center font-display text-base font-bold text-red-200">
+              <p className="self-center font-display text-base font-bold text-red-400">
                 {r.points != null ? formatPoints(r.points) : '—'}
               </p>
 
@@ -115,7 +115,7 @@ function RecentResultsTable({ results }) {
               </div>
 
               {/* Date */}
-              <p className="self-center text-xs text-white/45">{formatDate(r.race_date)}</p>
+              <p className="self-center text-xs text-zinc-500">{formatDate(r.race_date)}</p>
             </div>
           ))}
         </div>
@@ -165,7 +165,7 @@ export function DriverDetailPage() {
       {/* Back link */}
       <Link
         to="/drivers"
-        className="inline-flex items-center gap-2 text-sm text-white/55 transition hover:text-white"
+        className="inline-flex items-center gap-2 text-sm text-zinc-500 font-semibold transition hover:text-zinc-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -183,25 +183,21 @@ export function DriverDetailPage() {
       </Link>
 
       {/* Hero card */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
-        {/* Decorative glow blobs */}
-        <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-red-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 left-1/4 h-48 w-48 rounded-full bg-white/4 blur-3xl" />
-
+      <div className="glass-panel rounded-xl p-6">
         <div className="relative">
           {/* Eyebrow */}
-          <p className="card-title">Driver profile</p>
+          <p className="card-title">Driver Profile</p>
 
           {/* Name + code */}
           <div className="mt-3 flex flex-wrap items-end gap-4">
-            <h1 className="font-display text-5xl font-bold text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold text-white tracking-tight sm:text-5xl">
               {fullName(driver)}
             </h1>
             <span className="f1-chip mb-1">{driver.driver_code}</span>
           </div>
 
           {/* Nationality */}
-          <p className="mt-2 text-sm text-white/55">{driver.nationality}</p>
+          <p className="mt-2 text-sm text-zinc-400">{driver.nationality}</p>
 
           {/* Stat grid */}
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -216,9 +212,9 @@ export function DriverDetailPage() {
 
       {/* Recent results */}
       <GlassCard
-        eyebrow="Race history"
-        title="Recent results"
-        subtitle="Last 10 race appearances, most recent first."
+        eyebrow="Race History"
+        title="Recent Results"
+        subtitle="Shows the grid position, finish position, points, and status for the last 10 rounds."
       >
         <RecentResultsTable results={recent_results} />
       </GlassCard>

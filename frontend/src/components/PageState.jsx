@@ -1,9 +1,9 @@
 export function LoadingState({ label = 'Loading data' }) {
   return (
-    <div className="glass-panel rounded-[1.5rem] p-6 text-white/70">
+    <div className="border border-zinc-800 bg-zinc-900 rounded-xl p-6 text-zinc-300">
       <div className="flex items-center gap-3">
-        <span className="h-3 w-3 animate-pulse rounded-full bg-red-500" />
-        <p className="text-sm font-medium uppercase tracking-[0.3em]">{label}</p>
+        <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-red-600" />
+        <p className="text-xs font-semibold uppercase tracking-wider">{label}</p>
       </div>
     </div>
   )
@@ -11,9 +11,9 @@ export function LoadingState({ label = 'Loading data' }) {
 
 export function ErrorState({ message }) {
   return (
-    <div className="glass-panel rounded-[1.5rem] border-red-400/30 bg-red-500/10 p-6 text-white">
-      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-red-200">Unable to load</p>
-      <p className="mt-2 text-sm text-white/75">{message}</p>
+    <div className="border border-red-900/45 bg-zinc-900 rounded-xl p-6 text-zinc-100">
+      <p className="text-xs font-bold uppercase tracking-wider text-red-500">Error</p>
+      <p className="mt-2 text-sm text-zinc-400">{message}</p>
     </div>
   )
 }

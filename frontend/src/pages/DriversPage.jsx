@@ -60,10 +60,10 @@ export function DriversPage() {
       {state.error && <ErrorState message={state.error} />}
 
       {state.data && !state.loading && (
-        <div className="overflow-x-auto rounded-2xl border border-white/10">
+        <div className="overflow-x-auto rounded-xl border border-zinc-800">
           <div className="min-w-[520px]">
             {/* Header */}
-            <div className="grid grid-cols-[60px_1.6fr_1fr_80px_90px] gap-2 border-b border-white/10 bg-black/20 px-4 py-3 text-xs uppercase tracking-[0.3em] text-white/45">
+            <div className="grid grid-cols-[60px_1.6fr_1fr_80px_90px] gap-2 border-b border-zinc-800 bg-zinc-950/60 px-4 py-3 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
               <span>Pos</span>
               <span>Driver</span>
               <span>Nationality</span>
@@ -72,33 +72,33 @@ export function DriversPage() {
             </div>
 
             {/* Rows */}
-            <div className="divide-y divide-white/8 bg-white/3">
+            <div className="divide-y divide-zinc-800/60 bg-zinc-900/40">
               {state.data.items.map((entry) => (
                 <Link
                   key={entry.driver.id}
                   to={`/drivers/${entry.driver.id}`}
-                  className="grid grid-cols-[60px_1.6fr_1fr_80px_90px] gap-2 px-4 py-4 transition hover:bg-red-500/8 cursor-pointer"
+                  className="grid grid-cols-[60px_1.6fr_1fr_80px_90px] gap-2 px-4 py-4 transition hover:bg-zinc-850 cursor-pointer"
                 >
                   <div
-                    className={`font-display text-2xl font-bold ${
+                    className={`text-2xl font-bold ${
                       entry.position === 1
-                        ? 'text-yellow-300'
+                        ? 'text-yellow-350'
                         : entry.position === 2
-                        ? 'text-slate-300'
+                        ? 'text-zinc-300'
                         : entry.position === 3
-                        ? 'text-amber-600'
-                        : 'text-white/60'
+                        ? 'text-amber-500'
+                        : 'text-zinc-550'
                     }`}
                   >
                     {entry.position}
                   </div>
                   <div>
                     <p className="font-semibold text-white">{fullName(entry.driver)}</p>
-                    <p className="text-xs text-white/50">{entry.driver.driver_code}</p>
+                    <p className="text-xs text-zinc-500">{entry.driver.driver_code}</p>
                   </div>
-                  <p className="self-center text-sm text-white/60">{entry.driver.nationality}</p>
-                  <p className="self-center text-center text-sm text-white/70">{entry.wins}</p>
-                  <p className="self-center text-right font-display text-xl font-bold text-red-200">
+                  <p className="self-center text-sm text-zinc-400">{entry.driver.nationality}</p>
+                  <p className="self-center text-center text-sm text-zinc-300">{entry.wins}</p>
+                  <p className="self-center text-right text-xl font-bold text-red-400">
                     {formatPoints(entry.points)}
                   </p>
                 </Link>

@@ -19,11 +19,7 @@ const COUNTRY_FLAGS = {
 }
 
 function flagFor(country) {
-  if (!country) return '🏁'
-  for (const [key, flag] of Object.entries(COUNTRY_FLAGS)) {
-    if (country.toLowerCase().includes(key.toLowerCase())) return flag
-  }
-  return '🏁'
+  return ''
 }
 
 function positionColor(pos) {
@@ -37,10 +33,10 @@ function StatusPill({ status }) {
   const isFinished = status === 'Finished' || /^\+\d/.test(status)
   return (
     <span
-      className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+      className={`rounded border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
         isFinished
-          ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-          : 'border-red-500/30 bg-red-500/10 text-red-300'
+          ? 'border-zinc-800 bg-zinc-900 text-zinc-400'
+          : 'border-red-600/30 bg-red-600/10 text-red-400'
       }`}
     >
       {status}
@@ -53,66 +49,66 @@ function StatusPill({ status }) {
 function PastRaceView({ race, results, qualifying }) {
   const [tab, setTab] = useState('race')
   const podium = results.slice(0, 3)
-  const medals = ['🥇', '🥈', '🥉']
+  const medals = ['1st', '2nd', '3rd']
 
   return (
     <div className="space-y-5">
       {/* Podium */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
+      <div className="glass-panel rounded-xl p-6">
         <p className="card-title mb-4">Podium</p>
         <div className="grid gap-4 sm:grid-cols-3">
           {podium.map((r, i) => (
             <div
               key={r.id}
-              className={`relative overflow-hidden rounded-2xl border p-5 text-center ${
+              className={`relative overflow-hidden rounded-xl border p-5 text-center ${
                 i === 0
-                  ? 'border-yellow-400/30 bg-yellow-400/5'
+                  ? 'border-yellow-600/30 bg-zinc-900'
                   : i === 1
-                  ? 'border-slate-400/30 bg-slate-400/5'
-                  : 'border-amber-500/30 bg-amber-500/5'
+                  ? 'border-zinc-700 bg-zinc-900'
+                  : 'border-amber-700/30 bg-zinc-900'
               }`}
             >
-              <p className="text-3xl">{medals[i]}</p>
+              <p className="text-sm font-bold uppercase tracking-wider text-zinc-500">{medals[i]}</p>
               <Link
                 to={`/drivers/${r.driver.id}`}
-                className="mt-3 block text-lg font-bold text-white hover:text-red-200 transition"
+                className="mt-3 block text-lg font-bold text-white hover:text-red-400 transition"
               >
                 {fullName(r.driver)}
               </Link>
-              <p className="text-xs text-white/50">{r.constructor.name}</p>
-              <p className="mt-3 font-display text-3xl font-bold text-red-200">
+              <p className="text-xs text-zinc-500">{r.constructor.name}</p>
+              <p className="mt-3 font-display text-3xl font-bold text-red-400">
                 {formatPoints(r.points)}
-                <span className="ml-1 text-sm font-normal text-red-300/60">pts</span>
+                <span className="ml-1 text-sm font-normal text-zinc-500">pts</span>
               </p>
-              <p className="mt-1 text-xs text-white/40">Grid P{r.grid_position ?? '?'}</p>
+              <p className="mt-1 text-xs text-zinc-500">Grid P{r.grid_position ?? '?'}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
+      <div className="glass-panel rounded-xl p-6">
         <div className="mb-5 flex gap-2">
           {['race', 'qualifying'].map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setTab(t)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+              className={`rounded border px-4 py-2 text-sm font-medium transition cursor-pointer ${
                 tab === t
-                  ? 'border-red-400/50 bg-red-500/15 text-white'
-                  : 'border-white/10 bg-white/5 text-white/55 hover:text-white'
+                  ? 'border-red-600/50 bg-red-600/10 text-red-500'
+                  : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white'
               }`}
             >
-              {t === 'race' ? '🏁 Race Results' : '⏱ Qualifying'}
+              {t === 'race' ? 'Race Results' : 'Qualifying'}
             </button>
           ))}
         </div>
 
         {tab === 'race' && (
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <div className="overflow-x-auto rounded-xl border border-zinc-800">
             <div className="min-w-[560px]">
-              <div className="grid grid-cols-[52px_1.8fr_1.2fr_80px_80px_90px] gap-2 border-b border-white/10 bg-black/20 px-4 py-3 text-xs uppercase tracking-[0.3em] text-white/40">
+              <div className="grid grid-cols-[52px_1.8fr_1.2fr_80px_80px_90px] gap-2 border-b border-zinc-800 bg-zinc-950/60 px-4 py-3 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
                 <span>Pos</span>
                 <span>Driver</span>
                 <span>Team</span>
@@ -120,27 +116,27 @@ function PastRaceView({ race, results, qualifying }) {
                 <span className="text-right">Points</span>
                 <span className="text-right">Status</span>
               </div>
-              <div className="divide-y divide-white/8">
+              <div className="divide-y divide-zinc-800/60">
                 {results.map((r) => (
                   <div
                     key={r.id}
-                    className="grid grid-cols-[52px_1.8fr_1.2fr_80px_80px_90px] gap-2 px-4 py-3 transition hover:bg-white/3"
+                    className="grid grid-cols-[52px_1.8fr_1.2fr_80px_80px_90px] gap-2 px-4 py-3 transition hover:bg-zinc-850"
                   >
                     <span className={`font-display text-xl font-bold ${positionColor(r.finish_position)}`}>
                       {r.finish_position ?? '—'}
                     </span>
                     <Link
                       to={`/drivers/${r.driver.id}`}
-                      className="self-center font-medium text-white hover:text-red-200 transition truncate"
+                      className="self-center font-medium text-white hover:text-red-400 transition truncate"
                     >
                       {fullName(r.driver)}
-                      <span className="ml-1.5 text-xs text-white/40">{r.driver.driver_code}</span>
+                      <span className="ml-1.5 text-xs text-zinc-500">{r.driver.driver_code}</span>
                     </Link>
-                    <span className="self-center truncate text-sm text-white/55">{r.constructor.name}</span>
-                    <span className="self-center text-center text-sm text-white/50">
+                    <span className="self-center truncate text-sm text-zinc-400">{r.constructor.name}</span>
+                    <span className="self-center text-center text-sm text-zinc-500">
                       {r.grid_position ?? '—'}
                     </span>
-                    <span className="self-center text-right font-display text-base font-bold text-red-200">
+                    <span className="self-center text-right font-display text-base font-bold text-red-400">
                       {formatPoints(r.points)}
                     </span>
                     <div className="self-center text-right">
@@ -156,13 +152,13 @@ function PastRaceView({ race, results, qualifying }) {
         {tab === 'qualifying' && (
           <>
             {qualifying.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-white/15 bg-white/3 p-8 text-center text-sm text-white/40">
+              <div className="rounded-xl border border-dashed border-zinc-800 bg-zinc-950/40 p-8 text-center text-sm text-zinc-500">
                 No qualifying data available for this race.
               </div>
             ) : (
-              <div className="overflow-x-auto rounded-2xl border border-white/10">
+              <div className="overflow-x-auto rounded-xl border border-zinc-800">
                 <div className="min-w-[460px]">
-                  <div className="grid grid-cols-[52px_1.8fr_1.2fr_90px_90px_90px] gap-2 border-b border-white/10 bg-black/20 px-4 py-3 text-xs uppercase tracking-[0.3em] text-white/40">
+                  <div className="grid grid-cols-[52px_1.8fr_1.2fr_90px_90px_90px] gap-2 border-b border-zinc-800 bg-zinc-950/60 px-4 py-3 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
                     <span>Pos</span>
                     <span>Driver</span>
                     <span>Team</span>
@@ -170,25 +166,25 @@ function PastRaceView({ race, results, qualifying }) {
                     <span className="text-right">Q2</span>
                     <span className="text-right">Q3</span>
                   </div>
-                  <div className="divide-y divide-white/8">
+                  <div className="divide-y divide-zinc-800/60">
                     {qualifying.map((q) => (
                       <div
                         key={q.id}
-                        className="grid grid-cols-[52px_1.8fr_1.2fr_90px_90px_90px] gap-2 px-4 py-3 hover:bg-white/3"
+                        className="grid grid-cols-[52px_1.8fr_1.2fr_90px_90px_90px] gap-2 px-4 py-3 hover:bg-zinc-850"
                       >
                         <span className={`font-display text-xl font-bold ${positionColor(q.qualifying_position)}`}>
                           {q.qualifying_position ?? '—'}
                         </span>
                         <Link
                           to={`/drivers/${q.driver.id}`}
-                          className="self-center font-medium text-white hover:text-red-200 transition truncate"
+                          className="self-center font-medium text-white hover:text-red-400 transition truncate"
                         >
                           {fullName(q.driver)}
-                          <span className="ml-1.5 text-xs text-white/40">{q.driver.driver_code}</span>
+                          <span className="ml-1.5 text-xs text-zinc-500">{q.driver.driver_code}</span>
                         </Link>
-                        <span className="self-center truncate text-sm text-white/55">{q.constructor.name}</span>
+                        <span className="self-center truncate text-sm text-zinc-400">{q.constructor.name}</span>
                         {[q.q1_time, q.q2_time, q.q3_time].map((t, i) => (
-                          <span key={i} className="self-center text-right text-xs text-white/50 font-mono">
+                          <span key={i} className="self-center text-right text-xs text-zinc-500 font-mono">
                             {t != null ? t.toFixed(3) : '—'}
                           </span>
                         ))}
@@ -220,69 +216,60 @@ function FutureRaceView({ race }) {
   return (
     <div className="space-y-5">
       {/* Countdown */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
+      <div className="glass-panel rounded-xl p-6">
         <p className="card-title mb-4">Race Countdown</p>
         <div className="grid grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-red-500/25 bg-red-500/10 p-5 text-center">
-            <p className="font-display text-5xl font-bold text-red-100">{days}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-red-300/60">Days</p>
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5 text-center">
+            <p className="font-display text-5xl font-bold text-red-500">{days}</p>
+            <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500 font-semibold">Days</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5 text-center">
             <p className="font-display text-5xl font-bold text-white">{hours}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-white/40">Hours</p>
+            <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500 font-semibold">Hours</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5 text-center">
             <p className="font-display text-5xl font-bold text-white">{race.round_number}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-white/40">Round</p>
+            <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500 font-semibold">Round</p>
           </div>
         </div>
-        <p className="mt-5 text-center text-sm text-white/50">
-          Race day: <span className="text-white font-semibold">{formatDate(race.race_date)}</span>
+        <p className="mt-5 text-center text-sm text-zinc-400">
+          Race day: <span className="text-white font-bold">{formatDate(race.race_date)}</span>
         </p>
       </div>
 
       {/* Circuit info */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
+      <div className="glass-panel rounded-xl p-6">
         <p className="card-title mb-4">Circuit</p>
         <div className="flex items-start gap-4">
-          <span className="text-5xl">{flagFor(race.circuit?.country)}</span>
+          
           <div>
             <p className="text-xl font-bold text-white">{race.circuit?.name}</p>
-            <p className="text-sm text-white/55">{race.circuit?.location}, {race.circuit?.country}</p>
+            <p className="text-sm text-zinc-400">{race.circuit?.location}, {race.circuit?.country}</p>
           </div>
         </div>
       </div>
 
       {/* What to expect */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
-        <p className="card-title mb-4">What to expect</p>
+      <div className="glass-panel rounded-xl p-6">
+        <p className="card-title mb-4">Race details</p>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <p className="text-sm font-semibold text-white/80">🏆 Championship Impact</p>
-            <p className="mt-2 text-xs leading-5 text-white/50">
-              With {daysUntil} days until race day, every point will count. Track how the standings
-              shift round-by-round.
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
+            <p className="text-sm font-semibold text-white">Championship Standings</p>
+            <p className="mt-2 text-xs leading-5 text-zinc-400">
+              Results will apply to the seasonal standings immediately after the race is completed.
             </p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <p className="text-sm font-semibold text-white/80">📊 Head to the Analyst</p>
-            <p className="mt-2 text-xs leading-5 text-white/50">
-              Ask Racecraft AI anything about past races at this circuit or driver form coming into
-              this round.
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
+            <p className="text-sm font-semibold text-white">F1 AI Assistant</p>
+            <p className="mt-2 text-xs leading-5 text-zinc-400">
+              Ask questions about historical races, previous qualifying times, and driver stats at this circuit.
             </p>
             <Link
               to="/analyst"
-              className="mt-3 inline-flex items-center rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-200 transition hover:bg-red-500/20"
+              className="mt-3 inline-flex items-center rounded border border-red-600/30 bg-red-600/10 px-3 py-1.5 text-xs text-red-400 hover:bg-red-650 transition font-medium cursor-pointer"
             >
-              Open Analyst →
+              Open Assistant →
             </Link>
-          </div>
-          <div className="rounded-2xl border border-dashed border-white/15 bg-white/3 p-4 sm:col-span-2">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/35">Predictions — Coming in Memory Agent v2</p>
-            <p className="mt-2 text-xs text-white/30">
-              ML-powered podium predictions and qualifying grid estimates will appear here once the
-              prediction engine is live.
-            </p>
           </div>
         </div>
       </div>
@@ -352,31 +339,35 @@ export function RaceDetailPage() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="glass-panel rounded-[1.5rem] p-6">
+      <div className="glass-panel rounded-xl p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 flex-wrap">
               <Link
                 to="/races"
-                className="text-xs text-white/40 hover:text-white/70 transition"
+                className="text-xs text-zinc-500 hover:text-zinc-300 font-semibold transition"
               >
                 ← Races
               </Link>
               <span
-                className={`f1-chip ${isFuture ? 'border-blue-400/30 bg-blue-500/10 text-blue-200' : ''}`}
+                className={`rounded border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider ${
+                  isFuture
+                    ? 'border-red-600/30 bg-red-600/10 text-red-400'
+                    : 'border-zinc-800 bg-zinc-900 text-zinc-500'
+                }`}
               >
-                {isFuture ? '⏳ Upcoming' : '🏁 Completed'}
+                {isFuture ? 'Upcoming' : 'Completed'}
               </span>
             </div>
-            <h1 className="mt-3 text-3xl font-bold text-white sm:text-4xl">{race.race_name}</h1>
-            <p className="mt-1 text-sm text-white/55">
+            <h1 className="mt-3 text-2xl font-bold text-white tracking-tight sm:text-3xl">{race.race_name}</h1>
+            <p className="mt-1 text-xs text-zinc-400">
               Season {race.season} · Round {race.round_number} · {formatDate(race.race_date)}
             </p>
           </div>
           <div className="text-right">
-            <span className="text-6xl">{flagFor(race.circuit?.country)}</span>
+            
             {race.circuit && (
-              <p className="mt-1 text-xs text-white/40">{race.circuit.name}</p>
+              <p className="mt-1 text-[10px] uppercase font-bold tracking-wider text-zinc-500">{race.circuit.name}</p>
             )}
           </div>
         </div>

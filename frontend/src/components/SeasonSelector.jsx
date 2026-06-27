@@ -30,7 +30,7 @@ export function SeasonSelector({ value, onSeasonChange }) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs uppercase tracking-[0.3em] text-white/40 hidden sm:block">Season</span>
+      <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold hidden sm:block">Season</span>
       <div className="flex flex-wrap gap-1.5">
         {seasons.map((year) => (
           <button
@@ -38,10 +38,10 @@ export function SeasonSelector({ value, onSeasonChange }) {
             type="button"
             onClick={() => onSeasonChange(year)}
             className={[
-              'rounded-full border px-3 py-1 text-xs font-semibold transition',
+              'rounded border px-3 py-1.5 text-xs font-semibold transition cursor-pointer',
               value === year
-                ? 'border-red-400/60 bg-red-500/20 text-red-100 shadow-sm shadow-red-500/20'
-                : 'border-white/10 bg-white/5 text-white/60 hover:border-white/25 hover:text-white',
+                ? 'border-red-600 bg-red-600/10 text-red-500'
+                : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-white',
             ].join(' ')}
           >
             {year}

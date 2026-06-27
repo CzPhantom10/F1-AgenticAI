@@ -23,11 +23,7 @@ const COUNTRY_FLAGS = {
 }
 
 function flagFor(country) {
-  if (!country) return '🏁'
-  for (const [key, flag] of Object.entries(COUNTRY_FLAGS)) {
-    if (country.toLowerCase().includes(key.toLowerCase())) return flag
-  }
-  return '🏁'
+  return ''
 }
 
 export function RacesPage() {
@@ -80,47 +76,44 @@ export function RacesPage() {
               <Link
                 key={race.id}
                 to={`/races/${race.id}`}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 transition hover:border-red-400/25 hover:bg-red-500/5 cursor-pointer"
+                className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-red-600 hover:bg-zinc-900 cursor-pointer"
               >
-                {/* Flag watermark */}
-                <span className="pointer-events-none absolute right-4 top-3 text-5xl opacity-15 select-none">
-                  {flagFor(race.circuit?.country)}
-                </span>
+
 
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-xs uppercase tracking-[0.3em] text-white/40">
+                  <p className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">
                     Round {race.round_number}
                   </p>
                   <div className="flex gap-1.5">
                     <span
-                      className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                      className={`rounded border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
                         isPast
-                          ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                          : 'border-blue-400/30 bg-blue-500/10 text-blue-200'
+                          ? 'border-zinc-800 bg-zinc-900 text-zinc-500'
+                          : 'border-red-600/30 bg-red-600/10 text-red-400'
                       }`}
                     >
-                      {isPast ? '✓ Done' : '⏳ Soon'}
+                      {isPast ? 'Completed' : 'Upcoming'}
                     </span>
                     <span className="f1-chip text-[10px]">{race.season}</span>
                   </div>
                 </div>
 
-                <h3 className="mt-3 text-lg font-bold leading-snug text-white group-hover:text-red-100 transition">
+                <h3 className="mt-3 text-lg font-bold leading-snug text-white group-hover:text-red-400 transition">
                   {race.race_name}
                 </h3>
 
                 {race.circuit && (
                   <div className="mt-3 space-y-0.5">
-                    <p className="text-sm text-white/65">{race.circuit.name}</p>
-                    <p className="text-xs text-white/40">
+                    <p className="text-sm text-zinc-300 font-medium">{race.circuit.name}</p>
+                    <p className="text-xs text-zinc-500">
                       {race.circuit.location}, {race.circuit.country}
                     </p>
                   </div>
                 )}
 
                 <div className="mt-4 flex items-center justify-between">
-                  <p className="text-sm font-semibold text-red-200">{formatDate(race.race_date)}</p>
-                  <span className="text-lg">{flagFor(race.circuit?.country)}</span>
+                  <p className="text-sm font-bold text-red-400">{formatDate(race.race_date)}</p>
+                  
                 </div>
               </Link>
             )

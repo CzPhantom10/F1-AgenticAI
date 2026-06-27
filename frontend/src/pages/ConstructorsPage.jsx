@@ -57,10 +57,10 @@ export function ConstructorsPage() {
       {state.error && <ErrorState message={state.error} />}
 
       {state.data && !state.loading && (
-        <div className="overflow-x-auto rounded-2xl border border-white/10">
+        <div className="overflow-x-auto rounded-xl border border-zinc-800">
           <div className="min-w-[520px]">
             {/* Header */}
-            <div className="grid grid-cols-[60px_1.6fr_1fr_80px_80px_90px] gap-2 border-b border-white/10 bg-black/20 px-4 py-3 text-xs uppercase tracking-[0.3em] text-white/45">
+            <div className="grid grid-cols-[60px_1.6fr_1fr_80px_80px_90px] gap-2 border-b border-zinc-800 bg-zinc-950/60 px-4 py-3 text-xs uppercase tracking-wider text-zinc-500 font-semibold">
               <span>Pos</span>
               <span>Constructor</span>
               <span>Nationality</span>
@@ -70,25 +70,25 @@ export function ConstructorsPage() {
             </div>
 
             {/* Rows */}
-            <div className="divide-y divide-white/8 bg-white/3">
+            <div className="divide-y divide-zinc-800/60 bg-zinc-900/40">
               {state.data.items.map((entry) => {
                 const isTopTeam = ["Red Bull", "Red Bull Racing", "Ferrari", "Mercedes", "McLaren"].some(name => entry.constructor.name.includes(name));
                 return (
                   <div
                     key={entry.constructor.id}
                     className={`grid grid-cols-[60px_1.6fr_1fr_80px_80px_90px] gap-2 px-4 py-4 transition ${
-                      isTopTeam ? 'bg-red-500/5 hover:bg-red-500/10' : 'hover:bg-white/5'
+                      isTopTeam ? 'bg-zinc-850/50 hover:bg-zinc-800' : 'hover:bg-zinc-850/30'
                     }`}
                   >
                     <div
-                      className={`font-display text-2xl font-bold ${
+                      className={`text-2xl font-bold ${
                         entry.position === 1
-                          ? 'text-yellow-300'
+                          ? 'text-yellow-350'
                           : entry.position === 2
-                          ? 'text-slate-300'
+                          ? 'text-zinc-300'
                           : entry.position === 3
-                          ? 'text-amber-600'
-                          : 'text-white/60'
+                          ? 'text-amber-500'
+                          : 'text-zinc-550'
                       }`}
                     >
                       {entry.position}
@@ -96,10 +96,10 @@ export function ConstructorsPage() {
                     <div className="self-center">
                       <p className="font-semibold text-white">{entry.constructor.name}</p>
                     </div>
-                    <p className="self-center text-sm text-white/60">{entry.constructor.nationality}</p>
-                    <p className="self-center text-center text-sm text-white/70">{entry.wins}</p>
-                    <p className="self-center text-center text-sm text-white/70">{entry.podiums}</p>
-                    <p className="self-center text-right font-display text-xl font-bold text-red-200">
+                    <p className="self-center text-sm text-zinc-400">{entry.constructor.nationality}</p>
+                    <p className="self-center text-center text-sm text-zinc-300">{entry.wins}</p>
+                    <p className="self-center text-center text-sm text-zinc-300">{entry.podiums}</p>
+                    <p className="self-center text-right text-xl font-bold text-red-400">
                       {formatPoints(entry.points)}
                     </p>
                   </div>
