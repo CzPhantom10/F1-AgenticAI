@@ -140,6 +140,64 @@ class DataAgent:
         LOGGER.info("Persisted %s qualifying results for season %s.", len(persisted_results), year)
         return persisted_results
 
+    def fetch_race_by_round(
+        self,
+        year: int,
+        round_number: int,
+    ) -> tuple[list[RaceResult], list[QualifyingResult]]:
+        """Import a single race round incrementally.
+
+        Loads the season schedule, finds the row matching *round_number*, then
+        upserts the Circuit/Race rows and fetches both race results and
+        qualifying results for that specific round.  All writes share a single
+        session and are committed atomically so a partial failure leaves no
+        half-written rows.
+
+        Returns:
+            A ``(race_results, qualifying_results)`` tuple so callers can count
+            how many rows were imported without inspecting the database again.
+        """
+        schedule = self._load_event_schedule(year)
+        if schedule.empty:
+            LOGGER.warning(
+                "fetch_race_by_round: no schedule returned for %s.", year
+            )
+            return [], []
+
+        records = self._build_schedule_records(year, schedule)
+        record = next(
+            (r for r in records if r.round_number == round_number), None
+        )
+        if record is None:
+            LOGGER.warning(
+                "fetch_race_by_round: round %s not found in %s schedule.",
+                round_number,
+                year,
+            )
+            return [], []
+
+        with self._session_factory() as session:
+            race = self._upsert_race(session, record)
+            session.flush()
+
+            race_results = self._load_and_persist_race_results(
+                session, year, race, record.race_name
+            )
+            qualifying_results = self._load_and_persist_qualifying_results(
+                session, year, race, record.race_name
+            )
+
+            session.commit()
+
+        LOGGER.info(
+            "fetch_race_by_round: %s round %s — %s race results, %s qualifying results.",
+            year,
+            round_number,
+            len(race_results),
+            len(qualifying_results),
+        )
+        return race_results, qualifying_results
+
     def populate_historical_data(self, start_year: int, end_year: int) -> dict[int, list[RaceResult]]:
         """Populate race results for every season in the requested range."""
 

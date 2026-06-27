@@ -264,7 +264,7 @@ def import_season(agent: DataAgent, year: int) -> SeasonStats:
 
     # ── Pre-flight check: already in DB? ─────────────────────────────────────
     existing = _season_result_count(year)
-    if existing > 0:
+    if existing > 0 and year != _current_season():
         _skip(
             f"Season {year}",
             f"{existing} race results already in DB — skipping",
@@ -417,6 +417,11 @@ def _print_summary(all_stats: list[SeasonStats], total_elapsed: float) -> None:
 
 def main() -> None:
     """Run the full historical data import with skip-if-complete logic."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
+
     logging.basicConfig(
         level=logging.WARNING,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",

@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from app.api.routes.admin import admin_router
 from app.api.routes.analyst import analyst_router
 from app.api.routes.orchestrator import orchestrator_router
 from app.api.routes.resources import (
@@ -30,3 +31,4 @@ api_router.include_router(analyst_router)
 api_router.include_router(orchestrator_router)
 api_router.include_router(memory_router)
 api_router.include_router(prediction_router)
+api_router.include_router(admin_router)
